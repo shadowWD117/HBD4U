@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Happy Birthday Gantengku Sayang 💖</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Nunito:wght@400;600;700;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Canvas Confetti for Final Step -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        :root {
+            --bg-start: #fce4ec;
+            --bg-mid: #f3e5f5;
+            --bg-end: #fff0f5;
+            --button-bg: #3a3d4a;
+            --button-hover: #292b35;
+            --text-color: #4a4a5a;
+        }
+
+        body {
+            font-family: 'Quicksand', 'Nunito', sans-serif;
+            background: linear-gradient(135deg, var(--bg-start), var(--bg-mid), var(--bg-end));
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: var(--text-color);
+            min-height: 100vh;
+            overflow-x: hidden;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .font-handwriting {
+            font-family: 'Caveat', cursive;
+        }
+
+        /* Falling Emoji Particle Container */
+        #falling-emojis-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+            overflow: hidden;
+        }
+
+        .falling-emoji {
+            position: absolute;
+            top: -50px;
+            font-size: 1.5rem;
+            opacity: 0.85;
+            pointer-events: none;
+            animation: fallAndFade linear forwards;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
+        }
+
+        @keyframes fallAndFade {
+            0% {
+                transform: translateY(0) rotate(0deg) translateX(0);
+                opacity: 0.9;
+            }
+            50% {
+                transform: translateY(50vh) rotate(180deg) translateX(25px);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(105vh) rotate(360deg) translateX(-15px);
+                opacity: 0;
+            }
+        }
+
+        /* Custom Dark Rounded Button Style */
+        .btn-custom {
+            background-color: var(--button-bg);
+            color: #ffffff;
+            font-weight: 600;
+            padding: 0.55rem 1.75rem;
+            border-radius: 9999px;
+            box-shadow: 0 4px 14px rgba(58, 61, 74, 0.25);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            letter-spacing: 0.02em;
+        }
+
+        .btn-custom:hover {
+            background-color: var(--button-hover);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 6px 20px rgba(58, 61, 74, 0.35);
+        }
+
+        .btn-custom:active {
+            transform: translateY(1px) scale(0.97);
+        }
+
+        /* Slide Fade Animations */
+        .slide-enter {
+            animation: slideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .slide-exit {
+            animation: slideOut 0.35s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(18px) scale(0.97);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(-12px) scale(0.97);
+            }
+        }
+
+        /* Typing Effect Cursor */
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 0.8s infinite;
+            color: #ff6b81;
+            font-weight: bold;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Custom Scrollbar for Drawer */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(236, 72, 153, 0.3);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(236, 72, 153, 0.5);
+        }
+
+        /* Soft Glow Frame for Photos */
+        .photo-frame {
+            background: #ffffff;
+            padding: 8px;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(236, 72, 153, 0.12);
+            transition: transform 0.3s ease;
+        }
+        .photo-frame:hover {
+            transform: rotate(-1deg) scale(1.01);
+        }
+
+        /* Handwriting Note Overlay */
+        .handwriting-note {
+            font-family: 'Caveat', cursive;
+            color: #d81b60;
+            font-size: 1.15rem;
+            line-height: 1.1;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen justify-between items-center relative px-4 py-6">
+
+    <!-- Floating Emoji Particle Layer -->
+    <div id="falling-emojis-container"></div>
+
+    <!-- Floating Audio Control & Customizer Triggers -->
+    <div class="fixed top-4 right-4 z-50 flex items-center gap-2">
+        <!-- Audio BGM Button -->
+        <button id="bgm-toggle-btn" onclick="toggleBGM()" class="bg-white/80 backdrop-blur-md hover:bg-white text-gray-700 p-3 rounded-full shadow-lg transition active:scale-90 flex items-center justify-center w-11 h-11 border border-pink-100" title="Play / Pause Music">
+            <i id="bgm-icon" class="fas fa-music text-pink-500 text-sm"></i>
+        </button>
+
+        <!-- Edit / Settings Button -->
+        <button onclick="toggleDrawer()" class="bg-white/80 backdrop-blur-md hover:bg-white text-gray-700 p-3 rounded-full shadow-lg transition active:scale-90 flex items-center justify-center w-11 h-11 border border-pink-100" title="Customizer Editor">
+            <i class="fas fa-pen-to-square text-pink-500 text-sm"></i>
+        </button>
+    </div>
+
+    <!-- Hidden HTML5 Audio Element -->
+    <audio id="bgm-audio" loop preload="auto">
+        <source src="audio/bgm.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Top Spacer -->
+    <div class="w-full h-2"></div>
+
+    <!-- Main Interactive Card Container -->
+    <main class="w-full max-w-sm sm:max-w-md my-auto relative z-20">
+        <div id="slide-card" class="bg-white/70 backdrop-blur-lg border border-white/80 rounded-3xl p-6 sm:p-8 shadow-xl shadow-pink-200/40 text-center flex flex-col items-center justify-center min-h-[520px] transition-all duration-300 relative">
+
+            <!-- Dynamic Slide Content Inserted Here by JS -->
+            <div id="slide-content" class="w-full flex flex-col items-center justify-center">
+                <!-- Content will load dynamically -->
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Watermark Footer -->
+    <footer class="w-full text-center py-3 relative z-20">
+        <div class="inline-flex items-center justify-center gap-1.5 text-xs text-gray-500/80 font-medium tracking-wide">
+            <img id="watermark-avatar" src="images/avatar.jpg" alt="avatar" class="w-5 h-5 rounded-full object-cover border border-pink-300 inline-block shadow-sm">
+            <span id="watermark-text" class="italic font-sans">from ur beloved, <span class="font-bold text-gray-600">@soulatte &lt;3</span></span>
+        </div>
+    </footer>
+
+    <!-- Customization Bottom Drawer / Modal -->
+    <div id="customizer-drawer" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 flex justify-center items-end">
+        <div class="bg-white w-full max-w-lg rounded-t-3xl p-6 shadow-2xl max-h-[85vh] overflow-y-auto transform translate-y-full transition-transform duration-300" id="drawer-content">
+            <div class="flex justify-between items-center mb-4 sticky top-0 bg-white pb-2 border-b border-gray-100 z-10">
+                <div class="flex items-center gap-2">
+                    <span class="text-xl">✨</span>
+                    <h3 class="font-bold text-gray-800 text-lg">Edit Web Content</h3>
+                </div>
+                <button onclick="toggleDrawer()" class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-gray-200 transition">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <p class="text-xs text-gray-500 mb-4">
+                Ubah teks, nama file gambar lokal, atau musik sesuai keinginanmu.
+            </p>
+
+            <!-- Customizer Controls -->
+            <div class="space-y-4 text-left text-sm">
+
+                <!-- Watermark Settings -->
+                <div class="bg-pink-50/60 p-3.5 rounded-2xl border border-pink-100 space-y-2">
+                    <label class="block font-bold text-xs uppercase tracking-wider text-pink-700">Watermark Settings</label>
+                    <div>
+                        <span class="text-xs text-gray-600">Teks Watermark:</span>
+                        <input type="text" id="edit-watermark-input" class="w-full mt-1 p-2 text-xs border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-300" placeholder="from ur beloved, @soulatte <3">
+                    </div>
+                </div>
+
+                <!-- Music Audio URL -->
+                <div class="bg-pink-50/60 p-3.5 rounded-2xl border border-pink-100 space-y-2">
+                    <label class="block font-bold text-xs uppercase tracking-wider text-pink-700">File Musik / Audio MP3</label>
+                    <input type="text" id="edit-audio-url" class="w-full p-2 text-xs border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-300" placeholder="audio/bgm.mp3">
+                </div>
+
+                <!-- Slide Editors List -->
+                <div class="space-y-3">
+                    <label class="block font-bold text-xs uppercase tracking-wider text-gray-600">Edit Per Slide (1-8)</label>
+                    <div id="drawer-slides-editor" class="space-y-3">
+                        <!-- Dynamic inputs created by JS -->
+                    </div>
+                </div>
+
+                <!-- Drawer Action Buttons -->
+                <div class="pt-4 flex gap-2">
+                    <button onclick="resetDataToDefault()" class="w-1/2 py-2.5 px-4 rounded-xl border border-gray-300 text-gray-600 font-semibold text-xs hover:bg-gray-50 transition">
+                        Reset Ke Default
+                    </button>
+                    <button onclick="applyCustomizations()" class="w-1/2 py-2.5 px-4 rounded-xl bg-pink-500 hover:bg-pink-600 text-white font-semibold text-xs shadow-md transition">
+                        Simpan Perubahan
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Default Slides Dataset (Menggunakan Path Gambar Lokal)
+        const DEFAULT_SLIDES = [
+            {
+                step: 1,
+                type: "single-image",
+                image: "images/sticker5.gif",
+                imageHint: "👈 req ganti gif ini? bisa dong!💖",
+                title: "HAPPYY BIRTHDAYY GANTENGKUU SAYANGG!!",
+                kaomoji: "૮ ˆ ˕ ˆ ა",
+                text: "there’s more waiting... click to find out ✨",
+                buttonText: "tap <3"
+            },
+            {
+                step: 2,
+                type: "single-image",
+                image: "images/sticker4.gif",
+                imageHint: "👈 req ganti gif ini? bisa dong!💖",
+                title: "",
+                kaomoji: "",
+                text: "sayangg udah berusaha lebih baik untuk setiap tahunnya yaa.<br>sayangkuu kerenn cekaliee, happy birthday sayanggg",
+                buttonText: "open it <3"
+            },
+            {
+                step: 3,
+                type: "single-image",
+                image: "images/sticker3.gif",
+                imageHint: "",
+                title: "",
+                kaomoji: "",
+                text: "makin tambah umur makin gantengg aja nii pacarkuuuu, nda adil ihh",
+                buttonText: "<3"
+            },
+            {
+                step: 4,
+                type: "single-image",
+                image: "images/sticker2.gif",
+                imageHint: "",
+                title: "",
+                kaomoji: "",
+                text: "okii inii terakhir gantengkuu, aku buatin sesuatuu untuk birthday nyaa sayangg,<br>dibaca pelan pelan aja yaa sayangkuu 🎂",
+                buttonText: "okaay <3"
+            },
+            {
+                step: 5,
+                type: "single-photo",
+                images: ["images/sticker1.gif"],
+                text1: "sayangg pantas dapetin semua cinta di dunia hari ini dan selamanyaa, happy birthday, cintakuu 🤍",
+                text2: "timaaci sayangg udah jadi bagian terbaikkuu <3",
+                buttonText: "open this (⁠♡⁠'⁠⁠'⁠♡⁠)"
+            },
+            {
+                step: 6,
+                type: "double-photo",
+                images: [
+                    "images/foto1.jpg",
+                    "images/foto3.jpg"
+                ],
+                text1: "setiap tahun, sayang semakin bijak, semakin baik hati sama semua orangg, dan semakin luar biasa.<br>happy birthday, my boy ♡",
+                text2: "kalau ditanya apa yang paling indah hari ini?<br>jawabanku kamu, sayang.",
+                buttonText: "♡"
+            },
+            {
+                step: 7,
+                type: "single-photo",
+                images: ["images/foto2.jpg"],
+                text1: "akuu selaluu sayangg ke sayang setiap hari nya dan akan bertambah teruss sayangg, aku gaakan pernah bosen ke sayangg 🥺🥹",
+                text2: "it's your day, sayangg. dibaca pelan ajaa, aku punya surat kecil buat bubbieee 🎂",
+                buttonText: "♡"
+            },
+            {
+                step: 8,
+                type: "typing-letter",
+                title: "HAPPYY 💖 BIRTHDAYY GANTENGKU SAYANGG ૮ε 💖 ฅ//<3ა",
+                letterText: `haloo my handsome, my love, my world!
+i don't know if you'll get bored with my long words,
+i hope not! i hope you always like me give this,
+i want to hug you on your birthday,
+i want to say....
+happy birthday to u cintakuu! selamat bertambah usiaa bb,
+di umur yang ke 14 inii aku berdoa semoga kamu selaluu dalam lindungan Allah Swt. selaluu sehatt,
+selaluu baikk,
+dan menjadii seseorang yang selaluu ingin tumbuh menjadii lebih baikk. jadi pribadi yang lebih baikk buat diri sendiri dan orang lainn yaa bb.
+
+ternyata ngga kerasa yaa kitaa uda hampir 1 tahunn bersamaa! dua tahunn kitaa merayakann barengg dann memperbaikii hubungan terus meneruss,
+and hopefully it will always be like that,
+it will never leave my life again cintakuu🤍🤍
+
+my wish for you on your birthday,
+whatever you ask may you receive,
+whatever you are looking for may you find it,
+whatever you want may it be fulfilled on your birthday,
+I hope you will walk on this journey knowing that you are mine baby,
+I hope even if things sometimes don't go your way you won't stop trying,
+you won't give up on yourself and in your last days, I hope you will remind yourself From this word "you deserve better, you deserve to be loved and celebrated in any way!! I really hope and pray for you, may you continue to be given health, abundance, surrounded by good and useful people, my love
+aku akan jadi seseorang yang selalu bangga sama kamu,
+sama perjalanan kamu,
+sama semuaa yg kamuu lakuinn,
+aku akan selaluu support keinginan kamuu,
+hobi kamuu,
+dan hal hal lain yg kamuu lagii tekuninn. aku akan selalu disini nemenin kamuu,
+percayalah ituu,
+kalo kamu butuhin orang buat hal "apapun" kabarin aku okayy? aku akan selaluu ada buat kamuu dimanapun dan kapanpunn,
+i will always endeavour for that.`,
+                buttonText: "Putar Ulang "
+            }
+        ];
+
+        // Active State Variables
+        let slidesData = JSON.parse(localStorage.getItem('birthday_slides_data')) || DEFAULT_SLIDES;
+        let watermarkData = localStorage.getItem('birthday_watermark') || "from ur beloved, @soulatte <3";
+        let audioUrlData = localStorage.getItem('birthday_audio') || "audio/bgm.mp3";
+
+        let currentStepIndex = 0;
+        let isAudioPlaying = false;
+        let typingTimeoutId = null;
+
+        // Falling Emoji Generator
+        const EMOJI_LIST = ['🎀', '🧸', '💖', '💕', '✨', '🎂', '🤍', '🌸', '🎁', '💗'];
+
+        function createFallingEmoji() {
+            const container = document.getElementById('falling-emojis-container');
+            if (!container) return;
+
+            const emojiEl = document.createElement('div');
+            emojiEl.classList.add('falling-emoji');
+            emojiEl.innerText = EMOJI_LIST[Math.floor(Math.random() * EMOJI_LIST.length)];
+
+            const startX = Math.random() * 100;
+            const duration = 5 + Math.random() * 5; 
+            const fontSize = 1.2 + Math.random() * 1.2; 
+
+            emojiEl.style.left = startX + 'vw';
+            emojiEl.style.animationDuration = duration + 's';
+            emojiEl.style.fontSize = fontSize + 'rem';
+
+            container.appendChild(emojiEl);
+
+            setTimeout(() => {
+                emojiEl.remove();
+            }, duration * 1000);
+        }
+
+        setInterval(createFallingEmoji, 400);
+
+        // Background Music Controls
+        function toggleBGM() {
+            const audio = document.getElementById('bgm-audio');
+            const icon = document.getElementById('bgm-icon');
+
+            if (!audio) return;
+
+            if (isAudioPlaying) {
+                audio.pause();
+                isAudioPlaying = false;
+                icon.className = 'fas fa-music text-pink-500 text-sm';
+            } else {
+                audio.play().then(() => {
+                    isAudioPlaying = true;
+                    icon.className = 'fas fa-pause text-pink-600 text-sm animate-pulse';
+                }).catch(err => {
+                    console.log('Autoplay blocked or audio error:', err);
+                });
+            }
+        }
+
+        // Render Active Slide
+        function renderSlide(index) {
+            const slideContent = document.getElementById('slide-content');
+            const data = slidesData[index];
+
+            if (!data) return;
+
+            if (typingTimeoutId) clearTimeout(typingTimeoutId);
+
+            slideContent.classList.remove('slide-enter');
+            slideContent.classList.add('slide-exit');
+
+            setTimeout(() => {
+                slideContent.innerHTML = '';
+                slideContent.classList.remove('slide-exit');
+
+                let htmlContent = '';
+
+                if (data.type === 'single-image') {
+                    htmlContent = `
+                        <div class="relative mb-5 flex flex-col items-center group">
+                            <img src="${data.image}" alt="mascot" 
+                                class="w-44 h-44 sm:w-52 sm:h-52 object-contain drop-shadow-md hover:scale-105 transition-transform duration-300">
+                            ${data.imageHint ? `
+                                <div class="mt-2 text-right w-full pr-2">
+                                    <span class="handwriting-note text-xs sm:text-sm animate-bounce inline-block">${data.imageHint}</span>
+                                </div>
+                            ` : ''}
+                        </div>
+
+                        ${data.title ? `<h1 class="text-xl sm:text-2xl font-extrabold text-gray-800 leading-snug mb-1 tracking-tight">${data.title}</h1>` : ''}
+                        ${data.kaomoji ? `<p class="text-lg text-gray-600 font-semibold mb-3">${data.kaomoji}</p>` : ''}
+                        ${data.text ? `<p class="text-sm sm:text-base text-gray-600 font-medium leading-relaxed max-w-xs mb-6">${data.text}</p>` : ''}
+
+                        <button onclick="nextSlide()" class="btn-custom mt-2">
+                            ${data.buttonText || 'tap <3'}
+                        </button>
+                    `;
+                }
+                else if (data.type === 'single-photo') {
+                    htmlContent = `
+                        <div class="photo-frame mb-5 w-56 sm:w-64">
+                            <img src="${data.images[0]}" alt="photo" 
+                                class="w-full h-60 sm:h-64 object-cover rounded-xl shadow-inner">
+                        </div>
+
+                        <p class="text-sm sm:text-base text-gray-800 font-semibold leading-snug mb-2 max-w-xs">${data.text1 || ''}</p>
+                        ${data.text2 ? `<p class="text-xs sm:text-sm text-gray-500 font-medium mb-6 max-w-xs">${data.text2}</p>` : ''}
+
+                        <button onclick="nextSlide()" class="btn-custom mt-1">
+                            ${data.buttonText || '♡'}
+                        </button>
+                    `;
+                }
+                else if (data.type === 'double-photo') {
+                    htmlContent = `
+                        <div class="grid grid-cols-2 gap-3 mb-5 w-full max-w-xs">
+                            <div class="photo-frame">
+                                <img src="${data.images[0]}" alt="photo 1" 
+                                    class="w-full h-36 sm:h-40 object-cover rounded-xl">
+                            </div>
+                            <div class="photo-frame">
+                                <img src="${data.images[1]}" alt="photo 2" 
+                                    class="w-full h-36 sm:h-40 object-cover rounded-xl">
+                            </div>
+                        </div>
+
+                        <p class="text-sm sm:text-base text-gray-800 font-semibold leading-snug mb-2 max-w-xs">${data.text1 || ''}</p>
+                        ${data.text2 ? `<p class="text-xs sm:text-sm text-gray-500 font-medium mb-6 max-w-xs">${data.text2}</p>` : ''}
+
+                        <button onclick="nextSlide()" class="btn-custom mt-1">
+                            ${data.buttonText || '♡'}
+                        </button>
+                    `;
+                }
+                else if (data.type === 'typing-letter') {
+                    htmlContent = `
+                        <div class="mb-4">
+                            <h2 class="text-lg sm:text-xl font-extrabold text-gray-800 leading-snug px-2">${data.title}</h2>
+                        </div>
+
+                        <div class="w-full max-w-xs my-3 text-left border-l-2 border-gray-400/80 pl-4 py-1 pr-2">
+                            <p id="typed-letter-target" class="text-sm sm:text-base text-gray-700 font-normal leading-relaxed whitespace-pre-line typing-cursor"></p>
+                        </div>
+
+                        <div class="mt-6 flex flex-wrap gap-2 justify-center">
+                            <button onclick="nextSlide()" class="btn-custom text-xs py-2 px-5">
+                                ${data.buttonText || 'Putar Ulang 🔄'}
+                            </button>
+                        </div>
+                    `;
+                }
+
+                slideContent.innerHTML = htmlContent;
+                slideContent.classList.add('slide-enter');
+
+                if (data.type === 'typing-letter') {
+                    startTypingAnimation(data.letterText || "");
+                    triggerConfetti();
+                }
+
+            }, 300);
+        }
+
+        // Typing Effect
+        function startTypingAnimation(fullText) {
+            const targetEl = document.getElementById('typed-letter-target');
+            if (!targetEl) return;
+
+            targetEl.innerText = "";
+            let charIndex = 0;
+
+            function typeNextChar() {
+                if (charIndex < fullText.length) {
+                    targetEl.innerText += fullText.charAt(charIndex);
+                    charIndex++;
+                    typingTimeoutId = setTimeout(typeNextChar, 35);
+                } else {
+                    targetEl.classList.remove('typing-cursor');
+                }
+            }
+
+            typingTimeoutId = setTimeout(typeNextChar, 400);
+        }
+
+        // Confetti Burst
+        function triggerConfetti() {
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 60,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    colors: ['#ff80ab', '#ff4081', '#f48fb1', '#ce93d8', '#ffffff']
+                });
+            }
+        }
+
+        // Advance Slide
+        function nextSlide() {
+            if (!isAudioPlaying) {
+                toggleBGM();
+            }
+
+            currentStepIndex++;
+            if (currentStepIndex >= slidesData.length) {
+                currentStepIndex = 0;
+            }
+            renderSlide(currentStepIndex);
+        }
+
+        // Watermark Update
+        function updateWatermarkUI() {
+            const watermarkEl = document.getElementById('watermark-text');
+            if (watermarkEl) {
+                watermarkEl.innerHTML = watermarkData;
+            }
+        }
+
+        // Customizer Drawer Toggle
+        function toggleDrawer() {
+            const drawer = document.getElementById('customizer-drawer');
+            const content = document.getElementById('drawer-content');
+
+            if (!drawer || !content) return;
+
+            const isOpen = !drawer.classList.contains('opacity-0');
+
+            if (isOpen) {
+                content.classList.add('translate-y-full');
+                drawer.classList.add('opacity-0');
+                setTimeout(() => {
+                    drawer.classList.add('pointer-events-none');
+                }, 300);
+            } else {
+                buildDrawerEditorInputs();
+                drawer.classList.remove('pointer-events-none');
+                drawer.classList.remove('opacity-0');
+                content.classList.remove('translate-y-full');
+            }
+        }
+
+        // Build Customizer Inputs Dynamic List
+        function buildDrawerEditorInputs() {
+            const container = document.getElementById('drawer-slides-editor');
+            const wmInput = document.getElementById('edit-watermark-input');
+            const audioInput = document.getElementById('edit-audio-url');
+
+            if (wmInput) wmInput.value = watermarkData;
+            if (audioInput) audioInput.value = audioUrlData;
+
+            if (!container) return;
+            container.innerHTML = '';
+
+            slidesData.forEach((s, idx) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'bg-gray-50 p-3 rounded-xl border border-gray-200 space-y-2';
+
+                let fieldsHtml = `<div class="font-bold text-xs text-pink-600 mb-1">Slide ${idx + 1} (${s.type})</div>`;
+
+                if (s.title !== undefined) {
+                    fieldsHtml += `
+                    <div>
+                        <span class="text-[10px] text-gray-500">Judul / Header:</span>
+                        <input type="text" data-idx="${idx}" data-field="title" value="${(s.title || '').replace(/"/g, '&quot;')}" class="w-full p-1.5 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-pink-300">
+                    </div>`;
+                }
+
+                if (s.kaomoji !== undefined) {
+                    fieldsHtml += `
+                    <div>
+                        <span class="text-[10px] text-gray-500">Kaomoji:</span>
+                        <input type="text" data-idx="${idx}" data-field="kaomoji" value="${(s.kaomoji || '').replace(/"/g, '&quot;')}" class="w-full p-1.5 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-pink-300">
+                    </div>`;
+                }
+
+                if (s.image !== undefined) {
+                    fieldsHtml += `
+                    <div>
+                        <span class="text-[10px] text-gray-500">File Gambar/GIF Lokal:</span>
+                        <input type="text" data-idx="${idx}" data-field="image" value="${(s.image || '').replace(/"/g, '&quot;')}" class="w-full p-1.5 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-pink-300">
+                    </div>`;
+                }
+
+                if (s.images !== undefined) {
+                    s.images.forEach((imgUrl, imgIdx) => {
+                        fieldsHtml += `
+                        <div>
+                            <span class="text-[10px] text-gray-500">Foto ${imgIdx + 1} Path:</span>
+                            <input type="text" data-idx="${idx}" data-imgidx="${imgIdx}" data-field="images" value="${(imgUrl || '').replace(/"/g, '&quot;')}" class="w-full p-1.5 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-pink-300">
+                        </div>`;
+                    });
+                }
+
+                if (s.text !== undefined) {
+                    fieldsHtml += `
+                    <div>
+                        <span class="text-[10px] text-gray-500">Teks Utama:</span>
+                        <textarea data-idx="${idx}" data-field="text" rows="2" class="w-full p-1.5 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-pink-300">${s.text || ''}</textarea>
+                    </div>`;
+                }
+
+                if (s.text1 !== undefined) {
+                    fieldsHtml += `
+                    <div>
+                        <span class="text-[10px] text-gray-500">Teks 1:</span>
+                        <textarea data-idx="${idx}" data-field="text1" rows="2" class="w-full p-1.5 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-pink-300">${s.text1 || ''}</textarea>
+                    </div>`;
+                }
+
+                if (s.text2 !== undefined) {
+                    fieldsHtml += `
+                    <div>
+                        <span class="text-[10px] text-gray-500">Teks 2:</span>
+                        <textarea data-idx="${idx}" data-field="text2" rows="2" class="w-full p-1.5 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-pink-300">${s.text2 || ''}</textarea>
+                    </div>`;
+                }
+
+                if (s.letterText !== undefined) {
+                    fieldsHtml += `
+                    <div>
+                        <span class="text-[10px] text-gray-500">Teks Surat Typing (Letter):</span>
+                        <textarea data-idx="${idx}" data-field="letterText" rows="6" class="w-full p-1.5 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-pink-300">${s.letterText || ''}</textarea>
+                    </div>`;
+                }
+
+                if (s.buttonText !== undefined) {
+                    fieldsHtml += `
+                    <div>
+                        <span class="text-[10px] text-gray-500">Teks Tombol:</span>
+                        <input type="text" data-idx="${idx}" data-field="buttonText" value="${(s.buttonText || '').replace(/"/g, '&quot;')}" class="w-full p-1.5 text-xs border border-gray-200 rounded-lg focus:ring-1 focus:ring-pink-300">
+                    </div>`;
+                }
+
+                itemDiv.innerHTML = fieldsHtml;
+                container.appendChild(itemDiv);
+            });
+        }
+
+        // Apply and Save Customizations
+        function applyCustomizations() {
+            const wmInput = document.getElementById('edit-watermark-input');
+            const audioInput = document.getElementById('edit-audio-url');
+
+            if (wmInput) {
+                watermarkData = wmInput.value;
+                localStorage.setItem('birthday_watermark', watermarkData);
+                updateWatermarkUI();
+            }
+
+            if (audioInput) {
+                audioUrlData = audioInput.value;
+                localStorage.setItem('birthday_audio', audioUrlData);
+                const bgmAudio = document.getElementById('bgm-audio');
+                if (bgmAudio) {
+                    bgmAudio.src = audioUrlData;
+                }
+            }
+
+            const inputs = document.querySelectorAll('#drawer-slides-editor [data-field]');
+            inputs.forEach(input => {
+                const idx = parseInt(input.getAttribute('data-idx'));
+                const field = input.getAttribute('data-field');
+
+                if (field === 'images') {
+                    const imgIdx = parseInt(input.getAttribute('data-imgidx'));
+                    if (slidesData[idx] && slidesData[idx].images) {
+                        slidesData[idx].images[imgIdx] = input.value;
+                    }
+                } else if (slidesData[idx]) {
+                    slidesData[idx][field] = input.value;
+                }
+            });
+
+            localStorage.setItem('birthday_slides_data', JSON.stringify(slidesData));
+            toggleDrawer();
+            renderSlide(currentStepIndex);
+        }
+
+        // Reset to Default Data
+        function resetDataToDefault() {
+            localStorage.removeItem('birthday_slides_data');
+            localStorage.removeItem('birthday_watermark');
+            localStorage.removeItem('birthday_audio');
+            slidesData = JSON.parse(JSON.stringify(DEFAULT_SLIDES));
+            watermarkData = "from ur beloved, @soulatte <3";
+            audioUrlData = "audio/bgm.mp3";
+            
+            const bgmAudio = document.getElementById('bgm-audio');
+            if (bgmAudio) bgmAudio.src = audioUrlData;
+
+            updateWatermarkUI();
+            toggleDrawer();
+            renderSlide(currentStepIndex);
+        }
+
+        // Initialize App
+        window.addEventListener('DOMContentLoaded', () => {
+            updateWatermarkUI();
+            const bgmAudio = document.getElementById('bgm-audio');
+            if (bgmAudio) bgmAudio.src = audioUrlData;
+            renderSlide(currentStepIndex);
+        });
+    </script>
+</body>
+</html>
